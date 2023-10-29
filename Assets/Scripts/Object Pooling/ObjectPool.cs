@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SearchService;
 
 public class ObjectPool : Singleton<ObjectPool>
 {
     [System.Serializable]
     public class Pool
     {
+        [TagSelector]
         public string tag;
         public GameObject prefab;
         public int initialSize;
