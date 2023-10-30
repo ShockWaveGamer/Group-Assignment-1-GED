@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213fc3dee6b30fc4dae668017c2725b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SandPrefab: {fileID: 2009700239176994002, guid: 1b2ad941a98413742b48a29a7f313673, type: 3}
+  SandPrefab: {fileID: 2009700239176994002, guid: 94a888b9923771c4aba235a46536d18b, type: 3}
   OutputText: {fileID: 2046128118}
 --- !u!4 &549688051
 Transform:

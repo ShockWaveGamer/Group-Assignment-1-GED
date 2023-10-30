@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 213586275e1893241bce4ab9934d1aec
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - Sand: {fileID: 2100000, guid: 48252c05b0ddbee48955cec6e600e943, type: 2}
+  - Water: {fileID: 2100000, guid: b0363734b2d5e99429a3549b47e1717b, type: 2}
+  - Gas: {fileID: 2100000, guid: f0ed36b8ad63ff040b83397c0c8bdf21, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
