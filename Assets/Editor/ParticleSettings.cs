@@ -33,11 +33,40 @@ public class ParticleSettings : EditorWindow
     private void OnGUI()
     {
         prefabToEdit = EditorGUILayout.ObjectField("Prefab to Edit", prefabToEdit, typeof(GameObject), false) as GameObject;
+
+        EditorGUILayout.Space();
+
         selectedPreset = (ParticlePresets)EditorGUILayout.EnumPopup("Select Preset", selectedPreset);
+
+        if (GUILayout.Button("Apply Preset"))
+        {
+            switch (selectedPreset)
+            {
+                case ParticlePresets.Sand:
+                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Sand;
+                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
+                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.7f;
+                    break;
+                case ParticlePresets.Water:
+                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Water;
+                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
+                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.1f;
+                    break;
+                case ParticlePresets.Gas:
+                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Gas;
+                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = -1f;
+                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.01f;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        EditorGUILayout.Space();
+
         Gravity = EditorGUILayout.FloatField("Custom Gravity Value", Gravity);
         Friction = EditorGUILayout.FloatField("Custom Friction Value", Friction);
         ParticleColour = EditorGUILayout.ColorField("Select Color", ParticleColour);
-
 
         if (GUILayout.Button("Apply Custom Values"))
         {
@@ -46,35 +75,6 @@ public class ParticleSettings : EditorWindow
             prefabToEdit.GetComponent<Renderer>().sharedMaterial = CustomMaterial;
             prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = Gravity;
             prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = Friction;
-            prefabToEdit.tag = "Custom";
-        }
-
-
-            if (GUILayout.Button("Apply Preset"))
-        {
-            switch (selectedPreset)
-            {
-                case ParticlePresets.Sand:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Sand;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.7f;
-                    prefabToEdit.tag = "Sand";
-                    break;
-                case ParticlePresets.Water:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Water;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.1f;
-                    prefabToEdit.tag = "Water";
-                    break;
-                case ParticlePresets.Gas:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Gas;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = -1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.01f;
-                    prefabToEdit.tag = "Gas";
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

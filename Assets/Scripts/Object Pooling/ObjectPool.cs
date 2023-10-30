@@ -5,59 +5,72 @@ using UnityEngine.SearchService;
 
 public class ObjectPool : Singleton<ObjectPool>
 {
-    [System.Serializable]
-    public class Pool
-    {
-        [TagSelector]
-        public string tag;
-        public GameObject prefab;
-        public int initialSize;
-    }
+    [SerializeField] private GameObject objectPoolContainer;
+    [SerializeField] private GameObject defaultParticlePrefab;
+    [SerializeField] public List<Pool> pools;
 
-    public List<Pool> pools;
-
-    public Dictionary<string, Queue<GameObject>> m_poolDictionary;
+    [HideInInspector] public Dictionary<string, Queue<GameObject>> poolDictuibary;
 
     private void Start()
     {
-
-        m_poolDictionary = new Dictionary<string, Queue<GameObject>>();
-
+        poolDictuibary = new Dictionary<string, Queue<GameObject>>();
+        
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
 
-            for (int i = 0; i < pool.initialSize; i++)
-            {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
             if (objectPool != null)
             {
-                m_poolDictionary.Add(pool.tag, objectPool);
+                poolDictuibary.Add(pool.tag, objectPool);
             }
         }
 
     }
 
-    public GameObject ReturnObject(string tag, Vector2 position, Quaternion rotation)
+    public GameObject CreateObj(string tag, Vector2 position, Quaternion rotation)
     {
-        if (!m_poolDictionary.ContainsKey(tag))
+        // check to see if a pool exists for the object in question
+        if (!poolDictuibary.ContainsKey(tag))
         {
-            Debug.LogError("ayo it broke");
+            Debug.LogError($"Object Pool does not contain tag of: {tag}!");
             return null;
         }
 
-        GameObject objectToSpawn = m_poolDictionary[tag].Dequeue();
+        GameObject obj;
 
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.SetPositionAndRotation(position, rotation);
+        // check if there is an available object in the object pool
+        if (!poolDictuibary[tag].TryDequeue(out obj))
 
-        m_poolDictionary[tag].Enqueue(objectToSpawn);
+            // if no availabe object; find prefab for new object and instantiate
+            foreach (Pool pool in pools)
+                if (pool.tag == tag)
+                {
+                    obj = Instantiate(defaultParticlePrefab);
+                    break;
+                }
 
-        return objectToSpawn;
+        // set object to active and set it's position and rotation
+        obj.SetActive(true);
+        obj.transform.SetPositionAndRotation(position, rotation);
+
+        if (objectPoolContainer) obj.transform.parent = objectPoolContainer.transform;
+
+        return obj;
     }
 
+    public void RemoveObj(GameObject obj)
+    {
+        // check to see if a pool exists for the object in question
+        if (!poolDictuibary.ContainsKey(obj.tag)) return;
+
+        // que the object in the object pool and disable the object
+        poolDictuibary[obj.tag].Enqueue(obj);
+        obj.SetActive(false);
+    }
+
+    
+    [System.Serializable] public class Pool
+    {
+        [TagSelector] public string tag;
+    }
 }

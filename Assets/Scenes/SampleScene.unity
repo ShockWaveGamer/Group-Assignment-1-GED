@@ -180,7 +180,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322901288653936742, guid: 9de85f0d3e65a4241b2e3276d0db372a, type: 3}
       propertyPath: pools.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322901288653936742, guid: 9de85f0d3e65a4241b2e3276d0db372a, type: 3}
+      propertyPath: pools.Array.data[0].tag
+      value: Sand
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322901288653936742, guid: 9de85f0d3e65a4241b2e3276d0db372a, type: 3}
+      propertyPath: pools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 2009700239176994002, guid: 1b2ad941a98413742b48a29a7f313673, type: 3}
+    - target: {fileID: 6322901288653936742, guid: 9de85f0d3e65a4241b2e3276d0db372a, type: 3}
+      propertyPath: pools.Array.data[0].initialSize
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de85f0d3e65a4241b2e3276d0db372a, type: 3}
