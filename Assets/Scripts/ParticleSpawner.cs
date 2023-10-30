@@ -7,6 +7,7 @@ using System;
 public class ParticleSpawner : MonoBehaviour
 {
     ObjectPool objectPool;
+    [SerializeField] public GameObject prefab;
 
     private void Awake()
     {
@@ -26,13 +27,16 @@ public class ParticleSpawner : MonoBehaviour
             Vector3 ClickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); ClickPos.z = 0;
             DeleteParticle(ClickPos);
         }
-
     }
 
     private void CreateParticle(string particleType, Vector3 pos)
     {
         // todo implement type switching 
-        objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity);
+        GameObject particle = objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity);
+
+        particle.GetComponent<Renderer>().sharedMaterial = prefab.GetComponent<Renderer>().sharedMaterial;
+        particle.GetComponent<Rigidbody2D>().gravityScale = prefab.GetComponent<Rigidbody2D>().gravityScale;
+        particle.GetComponent<BoxCollider2D>().sharedMaterial.friction = prefab.GetComponent<BoxCollider2D>().sharedMaterial.friction;
         // todo add NewSpawnedParticle to pooling etc.
     }
 

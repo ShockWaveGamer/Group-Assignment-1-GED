@@ -6,7 +6,6 @@ using UnityEngine.SearchService;
 public class ObjectPool : Singleton<ObjectPool>
 {
     [SerializeField] private GameObject objectPoolContainer;
-    [SerializeField] private GameObject defaultParticlePrefab;
     [SerializeField] public List<Pool> pools;
 
     [HideInInspector] public Dictionary<string, Queue<GameObject>> poolDictuibary;
@@ -24,7 +23,6 @@ public class ObjectPool : Singleton<ObjectPool>
                 poolDictuibary.Add(pool.tag, objectPool);
             }
         }
-
     }
 
     public GameObject CreateObj(string tag, Vector2 position, Quaternion rotation)
@@ -45,7 +43,7 @@ public class ObjectPool : Singleton<ObjectPool>
             foreach (Pool pool in pools)
                 if (pool.tag == tag)
                 {
-                    obj = Instantiate(defaultParticlePrefab);
+                    obj = Instantiate(pool.prefab);
                     break;
                 }
 
@@ -67,10 +65,10 @@ public class ObjectPool : Singleton<ObjectPool>
         poolDictuibary[obj.tag].Enqueue(obj);
         obj.SetActive(false);
     }
-
     
     [System.Serializable] public class Pool
     {
         [TagSelector] public string tag;
+        [SerializeField] public GameObject prefab;
     }
 }
