@@ -32,7 +32,9 @@ public class ParticleSpawner : MonoBehaviour
     private void CreateParticle(string particleType, Vector3 pos)
     {
         // todo implement type switching 
-        GameObject particle = objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity);
+        GameObject particle = objectPool.enabled ?
+            objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity) :
+            Instantiate(prefab, pos, Quaternion.identity);
 
         particle.GetComponent<Renderer>().sharedMaterial = prefab.GetComponent<Renderer>().sharedMaterial;
         particle.GetComponent<Rigidbody2D>().gravityScale = prefab.GetComponent<Rigidbody2D>().gravityScale;
@@ -43,6 +45,17 @@ public class ParticleSpawner : MonoBehaviour
     private void DeleteParticle(Vector3 pos)
     {
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-        if (hit) objectPool.RemoveObj(hit.collider.gameObject);
-    }
+        if (!hit) return;
+
+        if (objectPool.enabled)
+        {
+            objectPool.RemoveObj(hit.collider.gameObject);
+        }
+        else if (hit.collider.CompareTag("Particle"))
+        {
+            Destroy(hit.collider.gameObject);
+        }
+
+/*        objectPool.enabled ? (objectPool.RemoveObj(hit.collider.gameObject)) : (Destroy(hit.collider.gameObject));
+*/    }
 }
