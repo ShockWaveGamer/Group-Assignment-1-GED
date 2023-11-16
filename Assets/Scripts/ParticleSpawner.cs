@@ -9,6 +9,8 @@ public class ParticleSpawner : MonoBehaviour
     ObjectPool objectPool;
     [SerializeField] public GameObject prefab;
 
+    [HideInInspector] public Element currentElement;
+
     private void Awake()
     {
         if (!(objectPool = FindObjectOfType<ObjectPool>())) objectPool = new GameObject().AddComponent<ObjectPool>();
@@ -36,10 +38,7 @@ public class ParticleSpawner : MonoBehaviour
             objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity) :
             Instantiate(prefab, pos, Quaternion.identity);
 
-        particle.GetComponent<Renderer>().sharedMaterial = prefab.GetComponent<Renderer>().sharedMaterial;
-        particle.GetComponent<Rigidbody2D>().gravityScale = prefab.GetComponent<Rigidbody2D>().gravityScale;
-        particle.GetComponent<BoxCollider2D>().sharedMaterial.friction = prefab.GetComponent<BoxCollider2D>().sharedMaterial.friction;
-        // todo add NewSpawnedParticle to pooling etc.
+        particle.GetComponent<Particle>().UpdateParticleElement(currentElement.type, currentElement.color, currentElement.gravity, currentElement.friction);
     }
 
     private void DeleteParticle(Vector3 pos)
@@ -55,7 +54,21 @@ public class ParticleSpawner : MonoBehaviour
         {
             Destroy(hit.collider.gameObject);
         }
+    }
 
-/*        objectPool.enabled ? (objectPool.RemoveObj(hit.collider.gameObject)) : (Destroy(hit.collider.gameObject));
-*/    }
+    public void SetCurrentElement(Element element)
+    {
+        currentElement.type = element.type;
+        currentElement.color = element.color;
+        currentElement.gravity = element.gravity;
+        currentElement.friction = element.friction;
+    }
+
+    public void SetCurrentElement(ElementTypes type, Color color, float gravity, float friction)
+    {
+        currentElement.type = type;
+        currentElement.color = color;
+        currentElement.gravity = gravity;
+        currentElement.friction = friction;
+    }
 }

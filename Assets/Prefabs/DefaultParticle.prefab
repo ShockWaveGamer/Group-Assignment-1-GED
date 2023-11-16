@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2009700239176994000}
   - component: {fileID: 2009700239176994003}
   - component: {fileID: 6786486636409218672}
+  - component: {fileID: 783213497275302604}
   m_Layer: 0
   m_Name: DefaultParticle
   m_TagString: Particle
@@ -54,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f0ed36b8ad63ff040b83397c0c8bdf21, type: 2}
+  - {fileID: 2100000, guid: 48252c05b0ddbee48955cec6e600e943, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,3 +134,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0.02
+--- !u!114 &783213497275302604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009700239176994002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd0ba59f49e67f4b90532c966c299ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 2

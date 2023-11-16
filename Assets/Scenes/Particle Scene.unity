@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 549688051}
   - component: {fileID: 549688050}
   - component: {fileID: 549688052}
+  - component: {fileID: 549688053}
   m_Layer: 0
   m_Name: Spawn Management
   m_TagString: Untagged
@@ -518,6 +519,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2009700239176994002, guid: 1b2ad941a98413742b48a29a7f313673, type: 3}
+  currentElement:
+    type: 0
+    color: {r: 1, g: 0, b: 0, a: 1}
+    gravity: 10
+    friction: 1
 --- !u!4 &549688051
 Transform:
   m_ObjectHideFlags: 0
@@ -550,6 +556,38 @@ MonoBehaviour:
   pools:
   - tag: Particle
     prefab: {fileID: 2009700239176994002, guid: 1b2ad941a98413742b48a29a7f313673, type: 3}
+--- !u!114 &549688053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549688049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f35eaf21e422a49af253429a55b5ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements:
+  - type: 1
+    color: {r: 1, g: 1, b: 0.49019608, a: 1}
+    gravity: 1
+    friction: 0.7
+  - type: 2
+    color: {r: 0, g: 0.49019608, b: 1, a: 1}
+    gravity: 1
+    friction: 0.1
+  - type: 3
+    color: {r: 1, g: 1, b: 1, a: 1}
+    gravity: -1
+    friction: 0.01
+  elementalCombinations:
+  - elementResult: 3
+    elementA: 1
+    elementB: 2
+  - elementResult: 3
+    elementA: 2
+    elementB: 1
 --- !u!1 &574512492
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,18 +11,7 @@ public class ParticleSettings : EditorWindow
     public float Gravity;
     public float Friction;
 
-    [SerializeField] Material Sand;
-    [SerializeField] Material Water;
-    [SerializeField] Material Gas;
-
-    public enum ParticlePresets
-    {
-        Sand,
-        Water,
-        Gas
-    }
-
-    private ParticlePresets selectedPreset;
+    private ElementTypes selectedPreset;
 
     [MenuItem("Window/Particles/Particle Settings")]
     public static void ShowWindow()
@@ -36,45 +25,40 @@ public class ParticleSettings : EditorWindow
 
         EditorGUILayout.Space();
 
-        selectedPreset = (ParticlePresets)EditorGUILayout.EnumPopup("Select Preset", selectedPreset);
-
-        if (GUILayout.Button("Apply Preset"))
+        selectedPreset = (ElementTypes)EditorGUILayout.EnumPopup("Select Preset", selectedPreset);
+        if (selectedPreset != ElementTypes.Custom)
         {
-            switch (selectedPreset)
+            if (GUILayout.Button("Apply Preset"))
             {
-                case ParticlePresets.Sand:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Sand;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.7f;
-                    break;
-                case ParticlePresets.Water:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Water;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = 1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.1f;
-                    break;
-                case ParticlePresets.Gas:
-                    prefabToEdit.GetComponent<Renderer>().sharedMaterial = Gas;
-                    prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = -1f;
-                    prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = 0.01f;
-                    break;
-                default:
-                    break;
+                Element newElement;
+
+                switch (selectedPreset)
+                {
+                    case ElementTypes.Sand:
+                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Sand);
+                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
+                        break;
+                    case ElementTypes.Water:
+                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Water);
+                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
+                        break;
+                    case ElementTypes.Gas:
+                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Gas);
+                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-
-        EditorGUILayout.Space();
-
-        Gravity = EditorGUILayout.FloatField("Custom Gravity Value", Gravity);
-        Friction = EditorGUILayout.FloatField("Custom Friction Value", Friction);
-        ParticleColour = EditorGUILayout.ColorField("Select Color", ParticleColour);
-
-        if (GUILayout.Button("Apply Custom Values"))
+        else
         {
-            Material CustomMaterial = new Material(Shader.Find("Legacy Shaders/Transparent/Cutout/Soft Edge Unlit"));
-            CustomMaterial.color = ParticleColour;
-            prefabToEdit.GetComponent<Renderer>().sharedMaterial = CustomMaterial;
-            prefabToEdit.GetComponent<Rigidbody2D>().gravityScale = Gravity;
-            prefabToEdit.GetComponent<BoxCollider2D>().sharedMaterial.friction = Friction;
+            ParticleColour = EditorGUILayout.ColorField("Select Color", ParticleColour);
+            Gravity = EditorGUILayout.FloatField("Custom Gravity Value", Gravity);
+            Friction = EditorGUILayout.FloatField("Custom Friction Value", Friction);
+
+            if (GUILayout.Button("Apply Custom Values"))
+                FindObjectOfType<ParticleSpawner>().SetCurrentElement(ElementTypes.Custom, ParticleColour, Gravity, Friction);
         }
     }
 }
