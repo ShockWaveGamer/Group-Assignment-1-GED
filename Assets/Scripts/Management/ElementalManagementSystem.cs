@@ -26,10 +26,12 @@ public class ElementalManagementSystem : Singleton<ElementalManagementSystem>
         elementalCombinationsDictionary.Clear();
         foreach (ElementalCombination elementalCombination in elementalCombinations)
         {
-            elementalCombinationsDictionary.Add(
-                new ElementalCombo(elementalCombination.elementA, elementalCombination.elementB),
-                elementalCombination.elementResult
-                );
+            ElementalCombo newKey = new ElementalCombo(elementalCombination.elementA, elementalCombination.elementB);
+
+            if (elementalCombinationsDictionary.ContainsKey(newKey)) 
+                Debug.LogError($"() already Exists at {elementalCombinationsDictionary.Count + 1}!");
+
+            elementalCombinationsDictionary.Add(newKey, elementalCombination.elementResult);
         }
     }
 
@@ -121,7 +123,17 @@ internal struct ElementalCombo
 public enum ElementTypes
 {
     Custom,
+    Ash,
+    Crystal,
+    Earth,
+    Ember,
+    Energy,
+    Glass,
+    Lava,
     Sand,
+    Smoke,
+    Steam,
+    Stone,
     Water,
-    Gas
+    Wood,
 }
