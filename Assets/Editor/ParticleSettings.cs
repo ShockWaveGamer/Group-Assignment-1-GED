@@ -21,7 +21,7 @@ public class ParticleSettings : EditorWindow
 
     private void OnGUI()
     {
-        prefabToEdit = EditorGUILayout.ObjectField("Prefab to Edit", prefabToEdit, typeof(GameObject), false) as GameObject;
+        //prefabToEdit = EditorGUILayout.ObjectField("Prefab to Edit", prefabToEdit, typeof(GameObject), false) as GameObject;
 
         EditorGUILayout.Space();
 
