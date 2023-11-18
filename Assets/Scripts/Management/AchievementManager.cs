@@ -60,8 +60,8 @@ public class AchievementManager : MonoBehaviour
                     {
                         achievement.completed = true;
                         //Debug.Log($"Achievement {achievement.achievementName} completed!");
-                        Instantiate(AchievementPopup, transform.position, Quaternion.identity);
-                        AchievementPopup.transform.GetChild(0).GetComponent<TextMeshPro>().text = achievement.achievementName;
+                        GameObject AP = Instantiate(AchievementPopup, FindObjectOfType<Canvas>().transform);
+                        AP.transform.GetChild(0).GetComponent<TMP_Text>().text = achievement.achievementName;
                     }
                 }
             }

@@ -15,6 +15,8 @@ public class ElementalManagementSystem : Singleton<ElementalManagementSystem>
     private Dictionary<ElementTypes, Element> elementsDictionary = new Dictionary<ElementTypes, Element>();
     private Dictionary<ElementalCombo, ElementTypes> elementalCombinationsDictionary = new Dictionary<ElementalCombo, ElementTypes>();
 
+    AchievementManager achievementManager;
+
     private void Awake()
     {
         elementsDictionary.Clear();
@@ -33,6 +35,8 @@ public class ElementalManagementSystem : Singleton<ElementalManagementSystem>
 
             elementalCombinationsDictionary.Add(newKey, elementalCombination.elementResult);
         }
+
+        achievementManager = GetComponent<AchievementManager>();
     }
 
     public Element GetElementData(ElementTypes type) 
@@ -89,6 +93,9 @@ public class ElementalManagementSystem : Singleton<ElementalManagementSystem>
 
         a.UpdateParticleElement(GetElementalCombinationResult(aType, bType));
         b.UpdateParticleElement(GetElementalCombinationResult(bType, aType));
+
+        achievementManager.AddParticle(aType.ToString());
+        achievementManager.AddParticle(bType.ToString());
     }
 }
 

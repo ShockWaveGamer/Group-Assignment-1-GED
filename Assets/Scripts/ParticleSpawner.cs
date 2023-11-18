@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class ParticleSpawner : MonoBehaviour
 {
@@ -11,9 +13,12 @@ public class ParticleSpawner : MonoBehaviour
 
     [HideInInspector] public Element currentElement;
 
+    AchievementManager achievementManager;
+
     private void Awake()
     {
         if (!(objectPool = FindObjectOfType<ObjectPool>())) objectPool = new GameObject().AddComponent<ObjectPool>();
+        achievementManager = GetComponent<AchievementManager>();
     }
 
     // Update is called once per frame
@@ -35,7 +40,7 @@ public class ParticleSpawner : MonoBehaviour
     {
         // todo implement type switching 
         GameObject particle = objectPool.enabled ?
-            objectPool.CreateObj(particleType.ToString(), pos, Quaternion.identity) :
+            objectPool.CreateObj(particleType, pos, Quaternion.identity) :
             Instantiate(prefab, pos, Quaternion.identity);
 
         particle.GetComponent<Particle>().UpdateParticleElement(currentElement.type, currentElement.color, currentElement.gravity, currentElement.friction);

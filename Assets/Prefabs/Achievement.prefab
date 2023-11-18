@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeToAppearFor: 3
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 3473123825027898583}
 --- !u!1 &7554725671315352236
 GameObject:
   m_ObjectHideFlags: 0

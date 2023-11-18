@@ -7,16 +7,12 @@ public class achievementBehaviour : MonoBehaviour
 {
     public float TimeToAppearFor = 3.0f;
     public AudioSource audioSource;
-    
-
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
-    }
 
     void Awake()
     {
+        audioSource = GetComponentInChildren<AudioSource>();
+        audioSource.Play();
+
         StartCoroutine(AppearFor(TimeToAppearFor));
     }
 
