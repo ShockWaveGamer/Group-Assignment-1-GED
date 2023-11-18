@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using Unity.Burst.CompilerServices;
 
 public class ParticleSettings : EditorWindow
 {
@@ -30,25 +31,9 @@ public class ParticleSettings : EditorWindow
         {
             if (GUILayout.Button("Apply Preset"))
             {
-                Element newElement;
-
-                switch (selectedPreset)
-                {
-                    case ElementTypes.Sand:
-                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Sand);
-                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
-                        break;
-                    case ElementTypes.Water:
-                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Water);
-                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
-                        break;
-                    case ElementTypes.Gas:
-                        newElement = FindObjectOfType<ElementalManagementSystem>().GetElementData(ElementTypes.Gas);
-                        FindObjectOfType<ParticleSpawner>().SetCurrentElement(newElement);
-                        break;
-                    default:
-                        break;
-                }
+                FindObjectOfType<ParticleSpawner>().SetCurrentElement(
+                    FindObjectOfType<ElementalManagementSystem>().GetElementData(selectedPreset)
+                    );
             }
         }
         else
@@ -59,6 +44,22 @@ public class ParticleSettings : EditorWindow
 
             if (GUILayout.Button("Apply Custom Values"))
                 FindObjectOfType<ParticleSpawner>().SetCurrentElement(ElementTypes.Custom, ParticleColour, Gravity, Friction);
+        }
+
+        if (GUILayout.Button("Clear Particles"))
+        {
+            ObjectPool objectPool = FindObjectOfType<ObjectPool>();
+            foreach (Particle particle in FindObjectsOfType<Particle>())
+            {
+                if (objectPool.enabled)
+                {
+                    objectPool.RemoveObj(particle.gameObject);
+                }
+                else if (particle.CompareTag("Particle"))
+                {
+                    Destroy(particle.gameObject);
+                }
+            }
         }
     }
 }

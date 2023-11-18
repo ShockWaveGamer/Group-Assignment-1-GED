@@ -520,10 +520,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2009700239176994002, guid: 1b2ad941a98413742b48a29a7f313673, type: 3}
   currentElement:
-    type: 0
-    color: {r: 1, g: 0, b: 0, a: 1}
-    gravity: 10
-    friction: 1
+    type: 8
+    color: {r: 1, g: 1, b: 0.49019608, a: 1}
+    gravity: 1
+    friction: 0.7
 --- !u!4 &549688051
 Transform:
   m_ObjectHideFlags: 0
@@ -570,24 +570,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - type: 1
+    color: {r: 0.12156863, g: 0.12156863, b: 0.12156863, a: 1}
+    gravity: 1
+    friction: 1
+  - type: 2
+    color: {r: 1, g: 0.49019608, b: 1, a: 1}
+    gravity: 0.5
+    friction: 0.5
+  - type: 3
+    color: {r: 0.49019608, g: 0.49019608, b: 0, a: 1}
+    gravity: 1
+    friction: 10
+  - type: 4
+    color: {r: 1, g: 0.49019608, b: 0, a: 1}
+    gravity: 0.1
+    friction: 0
+  - type: 5
+    color: {r: 1, g: 1, b: 0, a: 1}
+    gravity: 0
+    friction: 0
+  - type: 6
+    color: {r: 0.49019608, g: 0.49019608, b: 1, a: 0.49019608}
+    gravity: 0.5
+    friction: 0.5
+  - type: 7
+    color: {r: 1, g: 0.24313726, b: 0, a: 1}
+    gravity: 1
+    friction: -1
+  - type: 8
     color: {r: 1, g: 1, b: 0.49019608, a: 1}
     gravity: 1
     friction: 0.7
-  - type: 2
-    color: {r: 0, g: 0.49019608, b: 1, a: 1}
-    gravity: 1
-    friction: 0.1
-  - type: 3
-    color: {r: 1, g: 1, b: 1, a: 1}
+  - type: 9
+    color: {r: 0.24313726, g: 0.24313726, b: 0.24313726, a: 0.73333335}
     gravity: -1
-    friction: 0.01
+    friction: 0.5
+  - type: 10
+    color: {r: 1, g: 1, b: 1, a: 0.73333335}
+    gravity: -5
+    friction: 0
+  - type: 11
+    color: {r: 0.49019608, g: 0.49019608, b: 0.49019608, a: 1}
+    gravity: 5
+    friction: 10
+  - type: 12
+    color: {r: 0, g: 0.49019608, b: 1, a: 0.73333335}
+    gravity: 1
+    friction: -10
+  - type: 13
+    color: {r: 0.49019608, g: 0.24313726, b: 0, a: 1}
+    gravity: 1
+    friction: 10
   elementalCombinations:
+  - elementResult: 1
+    elementA: 13
+    elementB: 4
+  - elementResult: 9
+    elementA: 4
+    elementB: 13
+  - elementResult: 8
+    elementA: 3
+    elementB: 5
+  - elementResult: 8
+    elementA: 5
+    elementB: 3
   - elementResult: 3
-    elementA: 1
-    elementB: 2
+    elementA: 5
+    elementB: 11
   - elementResult: 3
-    elementA: 2
-    elementB: 1
+    elementA: 11
+    elementB: 5
+  - elementResult: 6
+    elementA: 8
+    elementB: 4
+  - elementResult: 10
+    elementA: 4
+    elementB: 8
+  - elementResult: 10
+    elementA: 12
+    elementB: 4
+  - elementResult: 10
+    elementA: 4
+    elementB: 12
+  - elementResult: 11
+    elementA: 7
+    elementB: 12
+  - elementResult: 10
+    elementA: 12
+    elementB: 7
+  - elementResult: 4
+    elementA: 13
+    elementB: 7
+  - elementResult: 6
+    elementA: 8
+    elementB: 7
+  - elementResult: 9
+    elementA: 7
+    elementB: 8
 --- !u!1 &574512492
 GameObject:
   m_ObjectHideFlags: 0
