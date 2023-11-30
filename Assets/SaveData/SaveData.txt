@@ -1,0 +1,5 @@
+Wed Nov 29 18:04:36 2023
+Particle ID: P_A, Amount: 6
+Particle ID: P_B, Amount: 0
+Particle ID: P_C, Amount: 18
+-

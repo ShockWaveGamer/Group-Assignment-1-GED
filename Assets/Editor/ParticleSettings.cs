@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
+using Codice.CM.Client.Differences;
+using System.IO;
+using System;
+using System.Runtime.InteropServices;
 
 public class ParticleSettings : EditorWindow
 {
@@ -11,6 +16,8 @@ public class ParticleSettings : EditorWindow
     public Color ParticleColour;
     public float Gravity;
     public float Friction;
+
+    public UnityEngine.Object statFile;
 
     private ElementTypes selectedPreset;
 
@@ -22,10 +29,6 @@ public class ParticleSettings : EditorWindow
 
     private void OnGUI()
     {
-        //prefabToEdit = EditorGUILayout.ObjectField("Prefab to Edit", prefabToEdit, typeof(GameObject), false) as GameObject;
-
-        EditorGUILayout.Space();
-
         selectedPreset = (ElementTypes)EditorGUILayout.EnumPopup("Select Preset", selectedPreset);
         if (selectedPreset != ElementTypes.Custom)
         {
@@ -46,18 +49,33 @@ public class ParticleSettings : EditorWindow
                 FindObjectOfType<ParticleSpawner>().SetCurrentElement(ElementTypes.Custom, ParticleColour, Gravity, Friction);
         }
 
-        if (GUILayout.Button("Clear Particles"))
+        EditorGUILayout.Space();
+
+        statFile = EditorGUILayout.ObjectField("Stat File Path", statFile, typeof(UnityEngine.Object));
+        
+        if (Application.isPlaying)
         {
-            ObjectPool objectPool = FindObjectOfType<ObjectPool>();
-            foreach (Particle particle in FindObjectsOfType<Particle>())
+            if (GUILayout.Button("Clear Particles"))
             {
-                if (objectPool.enabled)
+                if (statFile != null)
                 {
-                    objectPool.RemoveObj(particle.gameObject);
+                    string saveFilePath = AssetDatabase.GetAssetPath(statFile);
+                    Debug.Log("Saved to: " + saveFilePath);
+
+                    //FindObjectOfType<Logger>().SLNewParticleEntry("Hi");
                 }
-                else if (particle.CompareTag("Particle"))
+
+                ObjectPool objectPool = FindObjectOfType<ObjectPool>();
+                foreach (Particle particle in FindObjectsOfType<Particle>())
                 {
-                    Destroy(particle.gameObject);
+                    if (objectPool.enabled)
+                    {
+                        objectPool.RemoveObj(particle.gameObject);
+                    }
+                    else if (particle.CompareTag("Particle"))
+                    {
+                        Destroy(particle.gameObject);
+                    }
                 }
             }
         }
